@@ -1,0 +1,16 @@
+<h1>New Restaurant Creation Form</h1>
+<%= form_tag '/restaurants', method: :post do  %>
+  <div>
+    <%= label_tag :restaurant_name %>
+    <%= text_field_tag :restaurant_name %>
+  </div>
+  <div>
+    <%= label_tag :address %>
+    <%= text_field_tag :address %>
+  </div>  
+  <div>
+    <%= label_tag :yelp_url %>
+    <%= email_field_tag :yelp_url %>
+  </div>
+  <%= submit_tag "Submit" %>
+<% end %>

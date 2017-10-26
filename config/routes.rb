@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
 
-  get "/" => "events#index"
-  get "/events" => "events#index"
+  root to: "events#index"
 
-  get "/events/new" => "events#new"
-  post "/events" => "events#create"
+  resources :events
+  resources :users
+  resources :restaurants
+  resources :messages
 
-  get "/events/:id" => "events#show"
+  get "/login" => "sessions#new"
+  post "/login" => "sessions#create"
+  get "/logout" => "sessions#destroy"
 
-  get "/events/:id/edit" => "events#edit"
-  patch "/events/:id" => "events#update"
-
-  delete "/events/:id" => "events#destroy"
 end

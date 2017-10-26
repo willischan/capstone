@@ -1,0 +1,17 @@
+<h1>Event Page</h1>
+</br>
+<h4>Event Information</h5>
+<p>Title: <%= @event.event_name %></p>
+<p>Description: <%= @event.description %></p>
+<p>Date: <%= @event.event_date %></p>
+<p>Time: <%= @event.event_time %></p>
+</br>
+<h4> Restaurant Information</h5>
+<p>Name: <%= @event.restaurant.restaurant_name %></p>
+<p>Yelp URL: <a href="<%= @event.restaurant.yelp_url%>">Click here</a></p>
+<p>Address <%= @event.restaurant.address %></p>
+
+<%if current_user.id == @event.user_id%>
+  <a href="/events/<%=@event.id%>/edit">Edit Event</a>
+<%else%>
+<%end%>
