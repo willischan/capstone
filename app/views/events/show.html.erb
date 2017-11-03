@@ -11,7 +11,21 @@
 <p>Yelp URL: <a href="<%= @event.restaurant.yelp_url%>">Click here</a></p>
 <p>Address <%= @event.restaurant.address %></p>
 
+<h4>Attendees</h5>
+<% @users.each do |user| %>
+  <% @user_events.each do |user_event| %>
+    <%if user.id == user_event.user_id && user_event.event_id == @event.id%>
+      <p><%=user.first_name%> <%=user.last_name%></p>
+    <% end %>
+  <% end %>
+<% end %>
+
 <%if current_user.id == @event.user_id%>
   <a href="/events/<%=@event.id%>/edit">Edit Event</a>
-<%else%>
+<%end%>
+</br>
+
+<%= form_tag "/user_events", method: :post do %>
+  <input type="hidden" name="restaurant_id", value="<%=@event.restaurant.id%>">
+  <input type="submit" value="Join Event">
 <%end%>

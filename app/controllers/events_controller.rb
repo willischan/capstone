@@ -14,11 +14,12 @@ class EventsController < ApplicationController
       description: params[:description],
       event_date: params[:event_date],
       event_time: params[:event_time],
-      restaurant_id: Restaurant.find_by(restaurant_name: params[:restaurant_name]).id
+      restaurant_id: Restaurant.find_by(id: params[:restaurant]['restaurant_id']).id
     )
     if event.save
       flash[:success] = "Event successfully created" 
-      redirect_to "/events/#{event.id}"
+      redirect_to "/user_events/#{event.id}"
+      # redirect_to "/events/#{event.id}"
     else
       p event.errors.full_messages
       flash[:warning] = "Event unsuccessfully created. Try Again." 
@@ -28,6 +29,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @users = User.all
+    @user_events = UserEvent.all
   end
 
   def edit 
@@ -45,7 +48,7 @@ class EventsController < ApplicationController
     @event.description = params[:description]
     @event.event_date = params[:event_date]
     @event.event_time = params[:event_time]
-    @event.restaurant_id = Restaurant.find_by(restaurant_name: params[:restaurant_name]).id
+    @event.restaurant_id = Restaurant.find_by(id: params[:restaurant]['restaurant_id']).id
     if @event.save
       flash[:success] = "Event successfully updated"
       redirect_to "/events/#{@event.id}"
@@ -55,7 +58,10 @@ class EventsController < ApplicationController
   end
 
   def destroy
-
+    event = Event.find_by(id: params[:id])
+    event.destroy
+    flash[:danger] = "Event successfully deleted"
+    redirect_to "/events"
   end
 
 end
