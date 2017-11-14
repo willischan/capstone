@@ -1,6 +1,12 @@
 class EventsController < ApplicationController
   def index
     @events = Event.all
+    @user_events = UserEvent.all
+  end 
+
+  def all_events
+    @events = Event.all
+    @user_events = UserEvent.all
   end 
 
   def new
@@ -61,7 +67,7 @@ class EventsController < ApplicationController
     event = Event.find_by(id: params[:id])
     event.destroy
     flash[:danger] = "Event successfully deleted"
-    redirect_to "/events"
+    redirect_to "/events/"
   end
 
 end

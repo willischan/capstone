@@ -38,6 +38,7 @@ gem 'yelp', require: 'yelp'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dotenv-rails'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
@@ -57,3 +58,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
+
+gem 'seed_dump'
+gem 'geocoder'
+gem 'yelp', require: 'yelp'
+gem 'jwt'
+gem 'simple_command'
+gem 'unirest', '~> 1.1.2'

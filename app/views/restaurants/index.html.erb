@@ -1,0 +1,13 @@
+<% @restaurants['businesses'].each do |restaurant|%>
+  <h5><%= restaurant['name'] %></h5>
+  <p><%= restaurant['location']['address1'] %></p>
+  <p><%= restaurant['location']['city'] %></p>
+
+  <%= form_tag "/restaurants/new", method: :get do %>
+    <input type="hidden" name="yelp_id", value="<%=restaurant['id']%>">
+    <input type="submit" value="See More Details">
+    </br>
+  <%end%>
+  </br>
+<% end %>
+ 

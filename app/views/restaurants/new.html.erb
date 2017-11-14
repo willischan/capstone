@@ -1,16 +1,52 @@
-<h1>New Restaurant Creation Form</h1>
-<%= form_tag '/restaurants', method: :post do  %>
-  <div>
-    <%= label_tag :restaurant_name %>
-    <%= text_field_tag :restaurant_name %>
-  </div>
-  <div>
-    <%= label_tag :address %>
-    <%= text_field_tag :address %>
-  </div>  
-  <div>
-    <%= label_tag :yelp_url %>
-    <%= text_field_tag :yelp_url %>
-  </div>
-  <%= submit_tag "Submit" %>
-<% end %>
+<h1>Restaurant Details</h1>
+
+  <img src="<%= @restaurant['photos'][0]%>" height="30%" width="30%">
+  </br>
+  </br>
+  <h3><%= @restaurant['name'] %></h3>
+  <p>Address: <%= @restaurant['location']['address1'] %></p>
+  <p>City: <%= @restaurant['location']['city'] %></p>
+  <p>Rating: <%= @restaurant['rating'] %></p>
+  <p><a href="<%= @restaurant['url'] %>">Yelp URL</a></p>
+
+  <head>
+    <style>
+       #map {
+        height: 250px;
+        width: 250px;
+       }
+    </style>
+  </head>
+  <body>
+    <h3></h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: <%= @restaurant['coordinates']['latitude']%>, lng: <%= @restaurant['coordinates']['longitude']%>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAirtoeVNwDw86t45qHbJKkS0606An_nn0&callback=initMap">
+    </script>
+  </body>
+  </br>
+
+  <%= form_tag "/restaurants", method: :post do %>
+    <input type="hidden" name="restaurant_name", value="<%=@restaurant['name']%>">
+    <input type="hidden" name="address", value="<%=@restaurant['location']['address1']%>">
+    <input type="hidden" name="yelp_url", value="<%=@restaurant['url']%>">
+    <input type="hidden" name="latitude", value="<%=@restaurant['coordinates']['latitude']%>">
+    <input type="hidden" name="longitude", value="<%=@restaurant['coordinates']['longitude']%>">
+    <input type="submit" value="Create Restaurant?">
+    </br>
+  <%end%>
+  </br>
+ 

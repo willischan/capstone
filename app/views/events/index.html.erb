@@ -1,7 +1,44 @@
-<h1>All Events</h1>
-    <% @events.each do |event| %>
-      <h3><a href="/events/<%=event.id%>"> <%=event.event_name%></a></h3>
-      <p><%=event.description%></p>
-      <p><%=event.event_date%> <%=event.event_time%></p>
-      <p><%=event.description%></p>
-    <% end %>
+<% if current_user.present? %>
+
+<h1>Your Hosted Events</h1>
+
+<% @events.each do |event| %>
+  <% if current_user.present? && event.user_events.find_by(user_id: current_user.id) && event.user_id == current_user.id && event.event_date >= Time.now %>
+    <h3><a href="/events/<%=event.id%>"> <%=event.event_name%></a></h3>
+      <p>Description: <%=event.description%></p>
+      <p>Date: <%=event.event_date%></p>
+      <p>Time: <%=event.event_time.strftime("%I:%M %p")%></p>
+      <p>Restaurant: <%=event.restaurant.restaurant_name%></p>
+  <%end%>
+<% end %>
+
+
+<h1>Your Upcoming Events</h1>
+
+<% @events.each do |event| %>
+  <% if current_user.present? && event.user_events.find_by(user_id: current_user.id) && event.user_id != current_user.id && event.event_date >= Time.now %>
+    <h3><a href="/events/<%=event.id%>"> <%=event.event_name%></a></h3>
+      <p>Host: <%=event.user.first_name%> <%=event.user.last_name%></p>
+      <p>Description: <%=event.description%></p>
+      <p>Date: <%=event.event_date%></p>
+      <p>Time: <%=event.event_time.strftime("%I:%M %p")%></p>
+      <p>Restaurant: <%=event.restaurant.restaurant_name%></p>
+  <%end%>
+<% end %>
+
+<h1>Past Events</h1>
+
+<% @events.each do |event| %>
+  <% if current_user.present? && event.user_events.find_by(user_id: current_user.id) && event.event_date < Time.now %>
+    <h3><a href="/events/<%=event.id%>"> <%=event.event_name%></a></h3>
+      <p>Host: <%=event.user.first_name%> <%=event.user.last_name%></p>
+      <p>Description: <%=event.description%></p>
+      <p>Date: <%=event.event_date%></p>
+      <p>Time: <%=event.event_time.strftime("%I:%M %p")%></p>
+      <p>Restaurant: <%=event.restaurant.restaurant_name%></p>
+  <%end%>
+<% end %>
+
+<% else %>
+  <h1>Please login to view your events</h1>
+<%end%>

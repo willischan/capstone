@@ -17,5 +17,13 @@
     Restaurant: <%= collection_select :restaurant, :restaurant_id, Restaurant.all, :id, :restaurant_name %>
   </div>
   </br>
-  <input type="submit" value="Submit">
+  <input type="submit" value="Create Event">
 <% end %>
+</br>
+<h5>Find A Restaurant</h5>
+
+<%= form_tag "/restaurants", method: :get do %>
+    <p>Enter Keyword/Business Name: <input type="text" name="keyword", value=""></p>
+    <p>Enter City: <input type="text" name="location", value=""></p>
+    <input type="submit" value="Find A Restaurant">
+<%end%>

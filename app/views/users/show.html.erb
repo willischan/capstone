@@ -5,3 +5,34 @@
 <p>Email Name: <%= @user.email %></p>
 <p>Address: <%= @user.address %></p>
 <p>Phone Number: <%= @user.phone_number %></p>
+<p>Top 3 Favorite Foods: <%= @user.favorite %></p>
+
+<h1>Upcoming Events</h1>
+
+<% @user.events.each do |user_event| %>
+  <% if user_event.event_date >= Time.now %>
+    <h5>Event Info</h5>
+    <p>Title: <%= user_event.event_name %></p>
+    <p>Description: <%= user_event.description %></p>
+    <p>Date: <%= user_event.event_date %></p>
+    <p>Time: <%= user_event.event_time.strftime("%I:%M %p") %></p>
+    <p>Restaurat: <%= user_event.restaurant.restaurant_name %></p>
+
+    </br>
+  <%end%>
+<%end%>
+
+<h1>Past Attended Events</h1>
+
+<% @user.events.each do |user_event| %>
+  <% if user_event.event_date < Time.now %>
+    <h5>Event Info</h5>
+    <p>Title: <%= user_event.event_name %></p>
+    <p>Description: <%= user_event.description %></p>
+    <p>Date: <%= user_event.event_date %></p>
+    <p>Time: <%= user_event.event_time.strftime("%I:%M %p") %></p>
+    <p>Restaurat: <%= user_event.restaurant.restaurant_name %></p>
+
+    </br>
+  <%end%>
+<%end%>
