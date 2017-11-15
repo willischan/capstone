@@ -1,68 +1,99 @@
+<section class="section">
+  <div class="container">
 
-<h1>Event Page</h1>
-</br>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="detail-media">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active light-gallery" id="detail-media-images">
+                            <img src="<%= @event.restaurant.img_url %>" alt="" width="610" height="350">
+                        </div>
+                    </div>
+                </div>
 
-<!-- EVENT INFO -->
-<h4>Event Information</h4>
-<p>Title: <%= @event.event_name %></p>
-<p>Host: <a href="/users/<%=@event.user_id%>"><%= @event.user.first_name %> <%= @event.user.last_name %></a></p>
-<p>Description: <%= @event.description %></p>
-<p>Date: <%= @event.event_date %></p>
-<p>Time: <%= @event.event_time.strftime("%I:%M %p") %></p>
-</br>
-<h4> Restaurant Information</h5>
-<p>Name: <%= @event.restaurant.restaurant_name %></p>
-<p>Yelp URL: <a href="<%= @event.restaurant.yelp_url%>">Click here</a></p>
-<p>Address <%= @event.restaurant.address %></p>
-<!-- END EVENT INFO -->
 
-<!-- DISPLAY ATTENDEES -->
-<h4>Attendees</h4>
-<% @users.each do |user| %>
-  <% @user_events.each do |user_event| %>
-    <%if user.id == user_event.user_id && user_event.event_id == @event.id%>
-      <p><a href="/users/<%=user.id%>"><%=user.first_name%> <%=user.last_name%></a></p>
-    <% end %>
-  <% end %>
-<% end %>
-<!-- END DISPLAY ATTENDEES -->
+                <div class="detail-info">
+                    <div class="detail-info__header clearfix">
 
-<!-- JOIN/UNJOIN EVENT -->
-<%if current_user.id == @event.user_id && @event.event_date >= Time.now%>
-  <a href="/events/<%=@event.id%>/edit">Edit Event</a>
-<%elsif !@event.user_events.find_by(user_id: current_user.id) && @event.event_date > Time.now %>
-  <%= form_tag "/user_events/#{@event.id}", method: :post do %>
-    <input type="hidden" name="event_id", value="<%=@event.id%>">
-    <input type="submit" value="Join Event">
-  <%end%>
-<%elsif @event.event_date > Time.now %>
-  <%= form_tag "/user_events", method: :delete do %>
-    <input type="hidden" name="user_event_id", value="<%=@event.user_events.find_by(user_id: current_user.id).id%>">
-    <input type="submit" value="Unjoin Event">
-  <%end%>
-<%end%>
-<!-- END JOIN/UNJOIN EVENT -->
-</br>
-<!-- MESSAGE BOX -->
-<h4>MESSAGE BOX</h4>
-<% if @event.user_events.find_by(user_id: current_user.id) %>
-  <%= form_tag "/messages", method: :post do %>
-    <input type="text" name="content", value="">
-    <input type="hidden" name="event_id", value="<%=@event.id%>">
-    <input type="hidden" name="user_id", value="<%=current_user.id%>">
-    <input type="submit" value="Post Message">
-  <%end%>
-<%end%>
-</br>
-<div class="message_box-container">
-  <% @event.messages.order("created_at DESC").limit(5).each do |message| %>
-    <p> <%= message.user.first_name %> <%= message.user.last_name %> - <%= message.created_at.strftime("%b %e, %l:%M %p") %> </p>
-    <p> <%= message.content %></p>
-  <%end%>
-</div>
-<!-- END MESSAGE BOX -->
+                        <strong>Event Info</strong></br></br>
+                        <small>Title: <%= @event.event_name %></small></br>
+                        <small>Host: <a href="/users/<%=@event.user_id%>"><%= @event.user.first_name %> <%= @event.user.last_name %></a></small></br>
+                        <small>Description: <%= @event.description %></small></br>
+                        <small>Date: <%= @event.event_date %></small></br>
+                        <small>Time: <%= @event.event_time.strftime("%I:%M %p") %></small></br>
+                        </br></br>
+                        <strong>Restaurant Info</strong></br></br>
+                        <small>Name: <%= @event.restaurant.restaurant_name %></small></br>
+                        <small>Yelp URL: <a href="<%= @event.restaurant.yelp_url%>">Click here</a></small></br>
+                        <small>Address <%= @event.restaurant.address %></small></br></br>
 
-  <head>
+                        <%if current_user.id == @event.user_id && @event.event_date >= Time.now%>
+                          <a href="/events/<%=@event.id%>/edit">Edit Event</a>
+                        <%elsif !@event.user_events.find_by(user_id: current_user.id) && @event.event_date > Time.now %>
+                          <%= form_tag "/user_events/#{@event.id}", method: :post do %>
+                            <input type="hidden" name="event_id", value="<%=@event.id%>">
+                            <input type="submit" value="Join Event">
+                          <%end%>
+                        <%elsif @event.event_date > Time.now %>
+                          <%= form_tag "/user_events", method: :delete do %>
+                            <input type="hidden" name="user_event_id", value="<%=@event.user_events.find_by(user_id: current_user.id).id%>">
+                            <input type="submit" value="Unjoin Event">
+                          <%end%>
+                        <%end%>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div id="inquire" class="col-md-4 rmd-sidebar-mobile">
+        <div class="card hidden-print">
+            <div class="card__header">
+                <h1>Message Box</h1>
+            </div>
+
+            <div class="card__body">
+                <% if @event.user_events.find_by(user_id: current_user.id) %>
+                  <%= form_tag "/messages", method: :post do %>
+                    <input type="text" name="content", value="">
+                    <input type="hidden" name="event_id", value="<%=@event.id%>">
+                    <input type="hidden" name="user_id", value="<%=current_user.id%>">
+                    <input type="submit" value="Post Message">
+                  <%end%>
+                <%end%>
+                </br></br>
+                <div class="message_box-container">
+                  <% @event.messages.order("created_at DESC").limit(5).each do |message| %>
+                    <p> <%= message.user.first_name %> <%= message.user.last_name %> - <%= message.created_at.strftime("%b %e, %l:%M %p") %> </p>
+                    <p> <%= message.content %></p>
+                  <%end%>
+                </div>
+            </div>
+        </div>
+
+        <div class="card hidden-print">
+            <div class="card__header">
+                <h1>Attendees</h1>
+            </div>
+
+            <div class="card__body">
+              <% @users.each do |user| %>
+                <% @user_events.each do |user_event| %>
+                  <%if user.id == user_event.user_id && user_event.event_id == @event.id%>
+                    <p><a href="/users/<%=user.id%>"><%=user.first_name%> <%=user.last_name%></a></p>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+        </div>
+    </div>
+
+
+  </div>
+</section>
+
+
+<!--   <head>
     <style>
        #map {
         height: 350px;
@@ -89,7 +120,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAirtoeVNwDw86t45qHbJKkS0606An_nn0&callback=initMap">
     </script>
-  </body>
+  </body> -->
 
 </br>
       

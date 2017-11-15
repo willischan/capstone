@@ -1,48 +1,90 @@
-<h1>Restaurant Details</h1>
+<section class="section">
+  <div class="container">
 
-  <img src="<%= @restaurant['photos'][0]%>" height="30%" width="30%">
-  </br>
-  </br>
-  <h3><%= @restaurant['name'] %></h3>
-  <p>Address: <%= @restaurant['location']['address1'] %></p>
-  <p>City: <%= @restaurant['location']['city'] %></p>
-  <p>Rating: <%= @restaurant['rating'] %></p>
-  <p><a href="<%= @restaurant['url'] %>">Yelp URL</a></p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="detail-info">
+                    <div class="detail-info__header clearfix">
+                        <h1>Restaurant Details</h1>
+                        <img src="<%= @restaurant['image_url']%>" height="75%" width="75%"></br></br>
+                        <strong><%= @restaurant['name'] %></strong></br></br>
 
-  <head>
-    <style>
-       #map {
-        height: 250px;
-        width: 250px;
-       }
-    </style>
-  </head>
-  <body>
-    <h3></h3>
-    <div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: <%= @restaurant['coordinates']['latitude']%>, lng: <%= @restaurant['coordinates']['longitude']%>};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAirtoeVNwDw86t45qHbJKkS0606An_nn0&callback=initMap">
-    </script>
-  </body>
-  </br>
+                          <small><%= @restaurant['location']['address1'] %></small></br>
+                          <small><%= @restaurant['location']['city'] %></small></br>
+                          <small><%= @restaurant['phone'] %></small></br></br>
+                          <small>Reviews Count: <%= @restaurant['review_count'] %></small></br>
+                          <small>Rating: <%= @restaurant['rating'] %></small></br>
+                          <small>Price: <%= @restaurant['price'] %></small></br>
+                          <small>Category: <%= @restaurant['categories'][0]['title'] %></small></br>
+                          <small><a href="<%= @restaurant['url'] %>">Yelp URL</a><small></br></br>
+                         <%= form_tag "/restaurants", method: :post do %>
+                           <input type="hidden" name="restaurant_name", value="<%=@restaurant['name']%>">
+                           <input type="hidden" name="address", value="<%=@restaurant['location']['address1']%>">
+                           <input type="hidden" name="yelp_url", value="<%=@restaurant['url']%>">
+                           <input type="hidden" name="img_url", value="<%=@restaurant['image_url']%>">
+                           <input type="hidden" name="latitude", value="<%=@restaurant['coordinates']['latitude']%>">
+                           <input type="hidden" name="longitude", value="<%=@restaurant['coordinates']['longitude']%>">
+                           <input type="submit" value="Create Restaurant?">
+                           </br>
+                         <%end%>
+                         </br>
+
+                         <head>
+                           <style>
+                              #map {
+                               height: 250px;
+                               width: 250px;
+                              }
+                           </style>
+                         </head>
+                         <body>
+                           <h3></h3>
+                           <div id="map"></div>
+                           <script>
+                             function initMap() {
+                               var uluru = {lat: <%= @restaurant['coordinates']['latitude']%>, lng: <%= @restaurant['coordinates']['longitude']%>};
+                               var map = new google.maps.Map(document.getElementById('map'), {
+                                 zoom: 14,
+                                 center: uluru
+                               });
+                               var marker = new google.maps.Marker({
+                                 position: uluru,
+                                 map: map
+                               });
+                             }
+                           </script>
+                           <script async defer
+                           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAirtoeVNwDw86t45qHbJKkS0606An_nn0&callback=initMap">
+                           </script>
+                         </body>
+                         </br>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</section>
+
+      
+
+
+
+
+
+
+
+
 
   <%= form_tag "/restaurants", method: :post do %>
     <input type="hidden" name="restaurant_name", value="<%=@restaurant['name']%>">
     <input type="hidden" name="address", value="<%=@restaurant['location']['address1']%>">
     <input type="hidden" name="yelp_url", value="<%=@restaurant['url']%>">
+    <input type="hidden" name="img_url", value="<%=@restaurant['image_url']%>">
     <input type="hidden" name="latitude", value="<%=@restaurant['coordinates']['latitude']%>">
     <input type="hidden" name="longitude", value="<%=@restaurant['coordinates']['longitude']%>">
     <input type="submit" value="Create Restaurant?">

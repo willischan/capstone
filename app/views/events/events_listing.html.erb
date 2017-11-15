@@ -1,41 +1,5 @@
 <div>
 <% if current_user.present? %>
-<div class="header__recommended" style="color:blue;">
-    <div class="my-location">
-        <h1>Featured Events</h1>
-    </div>
-    <div class="listings-grid">
-    <% @events.each do |event| %>
-
-
-  <% if current_user.present? && !event.user_events.find_by(user_id: current_user.id) && event.event_date >= Time.now %>
-        <div class="listings-grid__item">
-
-                <a href="/events/<%=event.id%>">
-                    <div class="listings-grid__main">
-                        <img src="<%=event.restaurant.img_url%>" alt="" width="200" height="170">
-                        <div class="listings-grid__price"><%=event.event_name%></div>
-                    </div>
-
-                    <div class="listings-grid__body">
-          
-                        <h5><%=event.description%></h5>
-                        <small><%=event.event_date%> <%=event.event_time.strftime("%I:%M %p")%></small>
-                        <small><%=event.restaurant.restaurant_name%></small>
-
-                    </div>
-                </a>
-
-          </div>
-
-          <%end%>
-
-    <%end%>
-
-        </div>
-
-</div>
-
 
 <section class="section">
     <div class="container">
@@ -49,7 +13,7 @@
 
                     <div class="grid-widget grid-widget--listings">
 
-                      <% @events.where(user_id: current_user.id).take(4).each do |event| %>
+                      <% @events.each do |event| %>
                         <% if current_user.present? && event.user_events.find_by(user_id: current_user.id) && event.user_id == current_user.id && event.event_date >= Time.now %>
 
 
@@ -67,9 +31,6 @@
                       <% end %>
                     </div>
 
-                    <a class="view-more" href="/events_listing">
-                                View All Events <i class="zmdi zmdi-long-arrow-right"></i>
-                    </a>
                   </div>
                 </div>
               </div>
@@ -100,9 +61,66 @@
                       <% end %>
                     </div>
 
-                    <a class="view-more" href="/events_listing">
-                                View All Events <i class="zmdi zmdi-long-arrow-right"></i>
-                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card">
+                    <div class="card__header card__header--minimal">
+                      
+                      <h2>Available Events</h2>
+
+                      <div class="grid-widget grid-widget--listings">
+
+                        <% @events.each do |event| %>
+                          <% if current_user.present? && !event.user_events.find_by(user_id: current_user.id) && event.event_date >= Time.now %>
+
+
+                            <div class="col-xs-6">
+                              <a class="grid-widget__item" href="/events/<%=event.id%>">
+                                <img src="<%=event.restaurant.img_url%>" alt="" width="200" height="170">
+
+                                <div class="grid-widget__info">
+                                  <h3><%=event.event_name%></h3>
+                                  <small><%=event.event_date%> <%=event.event_time.strftime("%I:%M %p")%></small>
+                                </div>
+                              </a>
+                            </div>
+                          <%end%>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+            <div class="col-md-6">
+              <div class="card">
+                  <div class="card__header card__header--minimal">
+                    
+                    <h2>Your Past Events</h2>
+
+                    <div class="grid-widget grid-widget--listings">
+
+                      <% @events.each do |event| %>
+                        <% if current_user.present? && event.user_events.find_by(user_id: current_user.id) && event.event_date < Time.now %>
+
+
+                          <div class="col-xs-6">
+                            <a class="grid-widget__item" href="/events/<%=event.id%>">
+                              <img src="<%=event.restaurant.img_url%>" alt="" width="200" height="170">
+
+                              <div class="grid-widget__info">
+                                <h3><%=event.event_name%></h3>
+                                <small><%=event.event_date%> <%=event.event_time.strftime("%I:%M %p")%></small>
+                              </div>
+                            </a>
+                          </div>
+                        <%end%>
+                      <% end %>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -142,3 +160,7 @@
 </br>
 </br>
 </div>
+
+
+
+

@@ -1,24 +1,44 @@
-<h1>Edit Event Page </h1>
+<section class="section">
+  <div class="container">
+    <header class="section__title">
+        <h2>Event Edit Page</h2>
+    </header>
 
-<%= form_tag "/events/#{@event.id}", method: :patch do %>
-  <div>
-    Event Name: <input type="text" name="event_name"  value="<%= @event.event_name %>">
-  </div>
-  <div>
-    Description <input type="text" name="description" value="<%= @event.description %>">
-  </div>
-  <div>
-    Date: <input type="date" name="event_date" value="<%= @event.event_date %>">
-  </div>
-  <div>
-    Time: <input type="time" name="event_time" value="<%= @event.event_time %>">
-  </div>
-  <div>
-    Restaurant: <%= collection_select :restaurant, :restaurant_id, Restaurant.all, :id, :restaurant_name %>
-  </div>
-  </br>
-  <input type="submit" value="Save">
-<% end %>
+    <div class="card">
+      <div class="card__header">
 
+        <%= form_tag "/events/#{@event.id}", method: :patch do %>
+          <form class="card__body">
+              <div class="form-group m-b-5">
+                  <input type="text" name="event_name" class="form-control" value="<%= @event.event_name %>">
+                  <i class="form-group__bar"></i>
+                  <label>Event Name</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="text" name="description" class="form-control" value="<%= @event.description %>">
+                  <i class="form-group__bar"></i>
+                  <label>Description</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="date" name="event_date" class="form-control" value="<%= @event.event_date %>">
+                  <i class="form-group__bar"></i>
+                  <label>Date</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="time" name="event_time" class="form-control" value="<%= @event.event_time %>">
+                  <i class="form-group__bar"></i>
+                  <label>Time</label>
+              </div>
+              <div class="form-group m-b-5">
+                Restaurant: <%= collection_select :restaurant, :restaurant_id, Restaurant.all, :id, :restaurant_name %>
+                <i class="form-group__bar"></i>
+              </div>
+            <%= submit_tag "Save" %>
+          </form>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<a data-confirm="Are you sure?" data-method="delete" rel="nofollow" href="/events/<%=@event.id%>" class="btn btn-primary">Delete Event?</a>
+  <a data-confirm="Are you sure?" data-method="delete" rel="nofollow" href="/events/<%=@event.id%>" class="btn btn-primary">Delete Event?</a>
+</section>

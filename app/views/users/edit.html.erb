@@ -1,33 +1,49 @@
-<h1>Edit Profile Page </h1>
+<section class="section">
+  <div class="container">
+    <header class="section__title">
+        <h2>Edit Profile</h2>
+    </header>
 
-<%= form_tag "/users/#{@user.id}", method: :patch do %>
-  <div>
-    First Name: <input type="text" name="first_name"  value="<%= @user.first_name %>">
+    <div class="card">
+      <div class="card__header">
+
+        <%= form_tag "/users/#{@user.id}", method: :patch do %>
+          <form class="card__body">
+              <div class="form-group m-b-5">
+                  <input type="text" name="first_name" class="form-control" value="<%= @user.first_name %>">
+                  <i class="form-group__bar"></i>
+                  <label>First Name</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="text" name="last_name" class="form-control" value="<%= @user.last_name %>">
+                  <i class="form-group__bar"></i>
+                  <label>Last Name</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="text" name="email" class="form-control" value="<%= @user.email %>">
+                  <i class="form-group__bar"></i>
+                  <label>Email</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="text" name="address" class="form-control" value="<%= @user.address %>">
+                  <i class="form-group__bar"></i>
+                  <label>Address/label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="text" name="phone_number" class="form-control" value="<%= @user.phone_number %>">
+                  <i class="form-group__bar"></i>
+                  <label>Phone Number</label>
+              </div>
+              <div class="form-group m-b-5">
+                  <input type="text" name="favorite" class="form-control" value="<%= @user.favorite %>">
+                  <i class="form-group__bar"></i>
+                  <label>Top 3 Favorite Foods</label>
+              </div>
+
+            <%= submit_tag "Save" %>
+          </form>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div>
-    Last Name <input type="text" name="last_name" value="<%= @user.last_name %>"
-  </div>
-  <div>
-    Email: <input type="text" name="email" value="<%= @user.email %>"
-  </div>
-  <div>
-    Address: <input type="text" name="address" value="<%= @user.address %>"
-  </div>
-  <div>
-    City: <input type="text" name="city" value="<%= @user.city %>"
-  </div>
-  <div>
-    State: <input type="text" name="state" value="<%= @user.state %>"
-  </div>
-  <div>
-    Zip Code: <input type="text" name="zip_code" value="<%= @user.zip_code %>"
-  </div>
-  <div>
-    Phone Number: <input type="text" name="phone_number" value="<%= @user.phone_number %>"
-  </div>
-  <div>
-    Top 3 Favorite Foods: <input type="text" name="favorite" value="<%= @user.favorite %>"
-  </div>
-  </br>
-  <input type="submit" value="Save">
-<% end %>
+</section>

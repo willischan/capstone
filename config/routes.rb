@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources :restaurants
   resources :messages
 
-  get "/all_events" => "events#all_events"
+  get "/your_events" => "events#your_events"
+  get "/events_listing" => "events#events_listing"
 
   get "/login" => "sessions#new"
   post "/login" => "sessions#create"
