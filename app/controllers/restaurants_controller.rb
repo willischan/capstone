@@ -15,6 +15,7 @@ class RestaurantsController < ApplicationController
       restaurant_name: params[:restaurant_name],
       address: params[:address],
       yelp_url: params[:yelp_url],
+      img_url: params[:img_url],
       latitude: params[:latitude],
       longitude: params[:longitude]
     )

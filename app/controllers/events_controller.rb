@@ -1,13 +1,19 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.all
+    @events = Event.all.order(event_date: :asc)
     @user_events = UserEvent.all
   end 
 
-  def all_events
-    @events = Event.all
+  def your_events
+    @events = Event.all.order(event_date: :asc)
     @user_events = UserEvent.all
   end 
+
+  def events_listing
+    @events = Event.all.order(event_date: :asc)
+    @user_events = UserEvent.all
+  end 
+
 
   def new
 

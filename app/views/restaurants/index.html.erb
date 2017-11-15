@@ -1,13 +1,32 @@
-<% @restaurants['businesses'].each do |restaurant|%>
-  <h5><%= restaurant['name'] %></h5>
-  <p><%= restaurant['location']['address1'] %></p>
-  <p><%= restaurant['location']['city'] %></p>
+<section class="section">
+  <div class="container">
 
-  <%= form_tag "/restaurants/new", method: :get do %>
-    <input type="hidden" name="yelp_id", value="<%=restaurant['id']%>">
-    <input type="submit" value="See More Details">
-    </br>
-  <%end%>
-  </br>
-<% end %>
- 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="detail-info">
+                    <div class="detail-info__header clearfix">
+
+                        <h1>Top 20 Results</h1></br></br>
+
+                        <% @restaurants['businesses'].each do |restaurant|%>
+                          <strong><%= restaurant['name'] %></strong></br></br>
+                          <small><%= restaurant['location']['address1'] %></small></br>
+                          <small><%= restaurant['location']['city'] %></small></br>
+                          <small>Rating: <%= restaurant['rating'] %></small></br>
+                          <%= form_tag "/restaurants/new", method: :get do %>
+                            <input type="hidden" name="yelp_id", value="<%=restaurant['id']%>">
+                            <input type="submit" value="See More Details">
+                            </br>
+                          <%end%>
+                          </br>
+                        <%end%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+      
