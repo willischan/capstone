@@ -1,6 +1,6 @@
 <div>
 <% if current_user.present? %>
-<div class="header__recommended" style="color:blue;">
+<div class="header__recommended" style="color:black;">
     <div class="my-location">
         <h1>Featured Events</h1>
     </div>
@@ -49,7 +49,7 @@
 
                     <div class="grid-widget grid-widget--listings">
 
-                      <% @events.where(user_id: current_user.id).take(4).each do |event| %>
+                      <% @events.where(user_id: current_user.id).take(5).each do |event| %>
                         <% if current_user.present? && event.user_events.find_by(user_id: current_user.id) && event.user_id == current_user.id && event.event_date >= Time.now %>
 
 
@@ -114,31 +114,32 @@
 </div>
 
 <% else %>
-<div class="header__recommended" style="color:blue;">
+<div class="header__recommended" style="color:black;">
     <div class="my-location">
         <h1>Featured Events. Register or Login to explore!</h1>
     </div>
     <div class="listings-grid">
     <% @events.each do |event| %>
-    <div class="listings-grid__item">
+      <% if event.event_date >= Time.now %>
+        <div class="listings-grid__item">
 
-                <div class="listings-grid__main">
-                    <img src="<%=event.restaurant.img_url%>" alt="" width="200" height="170">
-                    <div class="listings-grid__price"><%=event.event_name%></div>
-                </div>
+          <div class="listings-grid__main">
+              <img src="<%=event.restaurant.img_url%>" alt="" width="200" height="170">
+              <div class="listings-grid__price"><%=event.event_name%></div>
+          </div>
 
-                <div class="listings-grid__body">
-      
-                    <h5><%=event.description%></h5>
-                    <small><%=event.event_date%></small>
-                    <small><%=event.restaurant.restaurant_name%></small>
+          <div class="listings-grid__body">
 
-                </div>
+              <h5><%=event.description%></h5>
+              <small><%=event.event_date%></small>
+              <small><%=event.restaurant.restaurant_name%></small>
+
+          </div>
 
       </div>
-
-      <%end%>
-      <%end%>
+    <%end%>
+  <%end%>
+<%end%>
 </br>
 </br>
 </div>

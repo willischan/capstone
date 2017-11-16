@@ -85,6 +85,8 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
+    friendly_id (5.2.3)
+      activerecord (>= 4.0.0)
     geocoder (1.4.4)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -232,6 +234,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  friendly_id
   geocoder
   jbuilder (~> 2.5)
   jquery-rails
