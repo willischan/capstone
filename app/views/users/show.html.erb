@@ -1,38 +1,124 @@
-<h1>Profile Page</h1>
+<%if current_user.present? %>
 
-<p>First Name: <%= @user.first_name %></p>
-<p>Last Name: <%= @user.last_name %></p>
-<p>Email Name: <%= @user.email %></p>
-<p>Address: <%= @user.address %></p>
-<p>Phone Number: <%= @user.phone_number %></p>
-<p>Top 3 Favorite Foods: <%= @user.favorite %></p>
 
-<h1>Upcoming Events</h1>
+<section class="section">
+    <div class="container">
 
-<% @user.events.each do |user_event| %>
-  <% if user_event.event_date >= Time.now %>
-    <h5>Event Info</h5>
-    <p>Title: <%= user_event.event_name %></p>
-    <p>Description: <%= user_event.description %></p>
-    <p>Date: <%= user_event.event_date %></p>
-    <p>Time: <%= user_event.event_time.strftime("%I:%M %p") %></p>
-    <p>Restaurat: <%= user_event.restaurant.restaurant_name %></p>
 
-    </br>
+<div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="detail-info">
+                    <div class="detail-info__header clearfix">
+
+                        <strong>User Profile</strong></br></br>
+                        <small>Name: <%= @user.first_name %> <%= @user.last_name %></small></br>
+                        <small>Favorite Foods: <%= @user.favorite %></small></br>
+                        <small>Date Joined: <%= @user.created_at.strftime("%Y-%m-%d") %></small></br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+      <div class="row">
+    
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card__header card__header--minimal">
+                    
+                    <h2>Upcoming Events</h2>
+
+                    <div class="grid-widget grid-widget--listings">
+
+                      <% @user.events.each do |user_event| %>
+                        <% if user_event.event_date >= Time.now %>
+
+                          <div class="col-xs-6">
+                            <a class="grid-widget__item" href="/events/<%=user_event.id%>">
+                              <img src="<%=user_event.restaurant.img_url%>" alt="" width="200" height="170">
+
+                              <div class="grid-widget__info">
+                                <h3><%=user_event.event_name%></h3>
+                                <small><%=user_event.event_date%> <%=user_event.event_time.strftime("%I:%M %p")%></small>
+                              </div>
+                            </a>
+                          </div>
+                        <%end%>
+                      <% end %>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+            <div class="col-md-6">
+              <div class="card">
+                  <div class="card__header card__header--minimal">
+                    
+                    <h2>Past Events</h2>
+
+                    <div class="grid-widget grid-widget--listings">
+
+                      <% @user.events.each do |user_event| %>
+                        <% if user_event.event_date < Time.now %>
+
+
+                          <div class="col-xs-6">
+                            <a class="grid-widget__item" href="/events/<%=user_event.id%>">
+                              <img src="<%=user_event.restaurant.img_url%>" alt="" width="200" height="170">
+
+                              <div class="grid-widget__info">
+                                <h3><%=user_event.event_name%></h3>
+                                <small><%=user_event.event_date%> <%=user_event.event_time.strftime("%I:%M %p")%></small>
+                              </div>
+                            </a>
+                          </div>
+                        <%end%>
+                      <% end %>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+</div>
+</section>
+
+
+</div>
+
+<% else %>
+<div class="header__recommended" style="color:blue;">
+    <div class="my-location">
+        <h1>Featured Events. Register or Login to explore!</h1>
+    </div>
+    <div class="listings-grid">
+    <% @events.each do |event| %>
+    <div class="listings-grid__item">
+
+                <div class="listings-grid__main">
+                    <img src="<%=event.restaurant.img_url%>" alt="" width="200" height="170">
+                    <div class="listings-grid__price"><%=event.event_name%></div>
+                </div>
+
+                <div class="listings-grid__body">
+      
+                    <h5><%=event.description%></h5>
+                    <small><%=event.event_date%></small>
+                    <small><%=event.restaurant.restaurant_name%></small>
+
+                </div>
+
+      </div>
+
+    <%end%>
   <%end%>
-<%end%>
+</br>
+</br>
+</div>
 
-<h1>Past Attended Events</h1>
 
-<% @user.events.each do |user_event| %>
-  <% if user_event.event_date < Time.now %>
-    <h5>Event Info</h5>
-    <p>Title: <%= user_event.event_name %></p>
-    <p>Description: <%= user_event.description %></p>
-    <p>Date: <%= user_event.event_date %></p>
-    <p>Time: <%= user_event.event_time.strftime("%I:%M %p") %></p>
-    <p>Restaurat: <%= user_event.restaurant.restaurant_name %></p>
 
-    </br>
-  <%end%>
-<%end%>
+
